@@ -8,3 +8,10 @@ You can add as many items as you want
 ```Bash
 python3 apt.py file.json
 ```
+## Showcase
+```Bash
+> python3 apt.py data.json
+Object: Sennheiser Game One Cuffia Gaming Aperta, Jack 3.5 mm, Nero
+Best price: 180.10€ Price: 205,03€
+```
+

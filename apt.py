@@ -12,17 +12,23 @@ if __name__ == "__main__":
 
 	obj = json.loads(data)
 
+	header = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36"}
+
 	for chunk in obj:
 		url = chunk['url']
 
-		page = requests.get(url,headers={"User-Agent":"Defined"})
+		page = requests.get(url,headers=header)
 		soup = BeautifulSoup(page.content, "html.parser")
-		name = soup.find("span", {"id":"productTitle"}).get_text().lstrip()
+		title = soup.find("span", {"id":"productTitle"})
+		if title:
+			title = title.get_text().lstrip()
+		else:
+			continue
 		price = soup.find("span", {"class":"a-offscreen"}).get_text()
 
 		price_list = chunk['price_list']
 		min_price = None if not price_list else min(price_list)
-		print("Object: {}\nBest price: {} Price: {}\n".format(name, min_price, price))
+		print("Object: {}\nBest price: {} Price: {}\n".format(title, min_price, price))
 
 		if not price in price_list:
 			price_list.append(price)

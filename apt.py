@@ -25,18 +25,17 @@ if __name__ == "__main__":
 			title = title.get_text().lstrip()
 		else:
 			continue
-		price = soup.find("span", {"class":"a-offscreen"}).get_text()
+		price = soup.find("span", {"class":"a-offscreen"}).get_text().replace(',','.')
+		sign = price[-1]
 
 		price_list_str = chunk['price_list']
-		price_list = [float(i[:len(i)-1].replace(',','.')) for i in price_list_str]
-		print(price_list)
-		exit
+		price_list = [float(i[:-1].replace(',','.')) for i in price_list_str]
 
 		min_price = None if not price_list else min(price_list)
 		avg_price = None if not price_list else statistics.fmean(price_list)
 		
-		print("Object: {}\nBest price: {}€ Avg price: {}€ Latest price: {}\n".format(title, min_price, avg_price, price))
-
+		print("Object: {}\nBest price: {}{} Avg price: {}{} Latest price: {}\n".format(title, min_price, sign, avg_price, sign, price))
+	
 		if not price in price_list:
 			price_list_str.append(price)
 			chunk['price_list'] = price_list_str

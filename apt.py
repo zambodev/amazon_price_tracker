@@ -2,6 +2,7 @@
 import requests
 import sys
 import json
+import statistics
 from bs4 import BeautifulSoup
 
 
@@ -26,13 +27,19 @@ if __name__ == "__main__":
 			continue
 		price = soup.find("span", {"class":"a-offscreen"}).get_text()
 
-		price_list = chunk['price_list']
+		price_list_str = chunk['price_list']
+		price_list = [float(i[:len(i)-1].replace(',','.')) for i in price_list_str]
+		print(price_list)
+		exit
+
 		min_price = None if not price_list else min(price_list)
-		print("Object: {}\nBest price: {} Price: {}\n".format(title, min_price, price))
+		avg_price = None if not price_list else statistics.fmean(price_list)
+		
+		print("Object: {}\nBest price: {}€ Avg price: {}€ Latest price: {}\n".format(title, min_price, avg_price, price))
 
 		if not price in price_list:
-			price_list.append(price)
-			chunk['price_list'] = price_list
+			price_list_str.append(price)
+			chunk['price_list'] = price_list_str
 
 	with open(sys.argv[1], "w") as file:
 		json.dump(obj, file)

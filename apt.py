@@ -41,4 +41,5 @@ if __name__ == "__main__":
 			chunk['price_list'] = price_list_str
 
 	with open(sys.argv[1], "w") as file:
-		json.dump(obj, file)
+		file.write(json.dumps(obj, indent=4))
+

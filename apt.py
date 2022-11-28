@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
     obj = json.loads(data)
 
-    if sys.argv[2]:
+    if len(sys.argv) > 2:
         obj.append({"url":sys.argv[2],"price_list":[]})
 
     header = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36"}

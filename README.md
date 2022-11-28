@@ -1,5 +1,7 @@
 # Amazon price tracker
 
+A small program made to keep track of your desired items on amazon 
+
 ## Setup
 Open 'template.json' with your text editor and fill the marked field <br>
 You can add as many items as you want
@@ -16,4 +18,6 @@ Note: links in argv are optional
 Object: Sennheiser Game One Cuffia Gaming Aperta, Jack 3.5 mm, Nero
 Best price: 180.10€ Price: 205,03€
 ```
+
 Note: Price history data is collected as long as you use the script
+Note: This program works only with prices with the price sice after the numbers

@@ -19,5 +19,5 @@ Object: Sennheiser Game One Cuffia Gaming Aperta, Jack 3.5 mm, Nero
 Best price: 180.10€ Price: 205,03€
 ```
 
-Note: Price history data is collected as long as you use the script
+Note: Price history data is collected as long as you use the script <br>
 Note: This program works only with prices with the price sice after the numbers

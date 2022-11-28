@@ -6,8 +6,10 @@ You can add as many items as you want
 
 ## How to run
 ```Bash
-python3 apt.py file.json
+python3 apt.py file.json hot_add_links[]
 ```
+Note: links in argv are optional
+
 ## Showcase
 ```Bash
 > python3 apt.py data.json

@@ -25,7 +25,7 @@ if __name__ == "__main__":
         url = chunk['url']
 
         page = requests.get(url,headers=header)
-        if not page.ok(): continue
+        if page.ok: continue
         soup = BeautifulSoup(page.content, "html.parser")
         page.close()
 

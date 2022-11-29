@@ -8,10 +8,12 @@ from bs4 import BeautifulSoup
 
 if __name__ == "__main__":
 
-    with open(sys.argv[1], "r") as file:
-        data = file.read()
+    if len(sys.argv) == 1:
+        print("ERROR: missing argument")
+        sys.exit()
 
-    obj = json.loads(data)
+    with open(sys.argv[1], "r") as file:
+        obj = json.loads(file.read())
 
     if len(sys.argv) > 2:
         for link in sys.argv[2:]:
@@ -23,7 +25,10 @@ if __name__ == "__main__":
         url = chunk['url']
 
         page = requests.get(url,headers=header)
+        if not page.ok(): continue
         soup = BeautifulSoup(page.content, "html.parser")
+        page.close()
+
         title = soup.find("span", {"id":"productTitle"})
         if title:
             title = title.get_text().lstrip()

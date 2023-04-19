@@ -44,7 +44,7 @@ if __name__ == "__main__":
         avg_price = None if not price_list else statistics.fmean(price_list)
         max_price = None if not price_list else max(price_list)
 
-        print("Object: {}\nWorst price: {}{} Avg price: {}{} Best price: {}{} Latest price: {}\n".format(title, max_price, sign, avg_price, sign, min_price, sign, price))
+        print(f"Object: {title}\nPrice range: {min_price}{sign} - {max_price}{sign}\nAvg price: {avg_price:.2f}{sign}\nLatest price: {price}\n")
     
         if not price in price_list:
             price_list_str.append(price)

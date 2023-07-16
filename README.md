@@ -25,8 +25,11 @@ python3 apt.py <file>.json <title>:'<link>'
 
 ## Showcase
 ```
-> python3 apt.py data.json
-Object: Sennheiser Game One Cuffia Gaming Aperta, Jack 3.5 mm, Nero
-Best price: 180.10€ Price: 205,03€
+> python3.11 apt.py file.json
+Object: gygabyte_3070_it
+Range: 423.0€ - 475.0€
+Avg: 449.0€
+Latest: 475.07€
+--------------------------------
 ```
 Note: Price history data is collected only when the script is runned

@@ -1,4 +1,4 @@
 [
-	{"url": "Paste link here", "price_list": []},
-	{"url": "Paste link here", "price_list": []}
+	{"title": "Insert title", "url": "Insert link", "price_list": []},
+	{"title": "Insert title", "url": "Insert link", "price_list": []}
 ]

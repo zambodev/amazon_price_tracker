@@ -1,15 +1,17 @@
-#!/usr/bin/python
+#!/usr/bin/python3
+
 import requests
 import sys
 import json
-import statistics
+import re
+from statistics import fmean
 from bs4 import BeautifulSoup
 
 
 if __name__ == "__main__":
 
     if len(sys.argv) == 1:
-        print("ERROR: missing argument")
+        print("Missing argument: apt.py <file>.json <title>:'<link>'")
         sys.exit()
 
     with open(sys.argv[1], "r") as file:
@@ -17,34 +19,35 @@ if __name__ == "__main__":
 
     if len(sys.argv) > 2:
         for link in sys.argv[2:]:
-            obj.append({"url":link,"price_list":[]})
+            linksplit = link.split(":", 1)
+            obj.append({"title":linksplit[0],"url":linksplit[1],"price_list":[]})
 
     header = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36"}
 
     for chunk in obj:
         url = chunk['url']
 
-        page = requests.get(url,headers=header)
-        if not page.ok: continue
-        soup = BeautifulSoup(page.content, "html.parser")
-        page.close()
-
-        title = soup.find("span", {"id":"productTitle"})
-        if title:
-            title = title.get_text().lstrip()
-        else:
+        page = requests.get(url, headers=header, timeout=60)
+        if(page.status_code != 200): 
             continue
-        price = soup.find("span", {"class":"a-offscreen"}).get_text().replace(',','.')
-        sign = price[-1]
+        
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        price = re.findall(r"[-+]?(?:\d*\.*\d+)", soup.find("span", {"class":"a-offscreen"}).get_text().replace(',','.'))[0]
+        sign = soup.find("span", {"class":"a-price-symbol"}).get_text()
 
         price_list_str = chunk['price_list']
         price_list = [float(i[:-1].replace(',','.')) for i in price_list_str]
 
         min_price = None if not price_list else min(price_list)
-        avg_price = None if not price_list else statistics.fmean(price_list)
+        avg_price = None if not price_list else fmean(price_list)
         max_price = None if not price_list else max(price_list)
 
-        print(f"Object: {title}\nPrice range: {min_price}{sign} - {max_price}{sign}\nAvg price: {avg_price:.2f}{sign}\nLatest price: {price}\n")
+        print(f"Object: {chunk['title']}")
+        print(f"Range: {min_price}{sign} - {max_price}{sign}")
+        print(f"Avg: {avg_price}{sign}")
+        print(f"Latest: {price}{sign}")
+        print("--------------------------------")
     
         if not price in price_list:
             price_list_str.append(price)

@@ -3,20 +3,30 @@
 A small program made to keep track of your desired items on amazon 
 
 ## Setup
-Open 'template.json' with your text editor and fill the marked field <br>
-You can add as many items as you want
+
+**Version**: python 3.11
+
+Required pip3 packages
+```
+pip3 install requests bs4
+```
+Copy the template.json and fill it with as many links as you want
 
 ## How to run
-```Bash
-python3 apt.py file.json hot_add_links[]
 ```
-Note: links in argv are optional
+python3 apt.py <file>.json
+```
+Add new items on the go:
+```
+python3 apt.py <file>.json <title>:'<link>'
+```
+
+**Note**: links in argv are optional
 
 ## Showcase
-```Bash
+```
 > python3 apt.py data.json
 Object: Sennheiser Game One Cuffia Gaming Aperta, Jack 3.5 mm, Nero
 Best price: 180.10€ Price: 205,03€
 ```
-
 Note: Price history data is collected only when the script is runned

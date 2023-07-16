@@ -27,13 +27,20 @@ if __name__ == "__main__":
     for chunk in obj:
         url = chunk['url']
 
+        print(f"Object: {chunk['title']}")
+
         page = requests.get(url, headers=header, timeout=60)
         if(page.status_code != 200): 
             continue
         
         soup = BeautifulSoup(page.content, "html.parser")
 
-        price = re.findall(r"[-+]?(?:\d*\.*\d+)", soup.find("span", {"class":"a-offscreen"}).get_text().replace(',','.'))[0]
+        price_text = soup.find("span", {"class":"a-offscreen"})
+        if(not price_text):
+            print("ERROR: Item non loaded correctly")
+            continue
+
+        price = re.findall(r"[-+]?(?:\d*\.*\d+)", price_text.get_text().replace(',','.'))[0]
         sign = soup.find("span", {"class":"a-price-symbol"}).get_text()
 
         price_list_str = chunk['price_list']
@@ -43,13 +50,12 @@ if __name__ == "__main__":
         avg_price = None if not price_list else fmean(price_list)
         max_price = None if not price_list else max(price_list)
 
-        print(f"Object: {chunk['title']}")
         print(f"Range: {min_price}{sign} - {max_price}{sign}")
         print(f"Avg: {avg_price}{sign}")
         print(f"Latest: {price}{sign}")
         print("--------------------------------")
-    
-        if not price in price_list:
+
+        if not str(price) in price_list_str:
             price_list_str.append(price)
             chunk['price_list'] = price_list_str
 

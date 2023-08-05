@@ -40,23 +40,23 @@ if __name__ == "__main__":
             print("ERROR: Item non loaded correctly")
             continue
 
-        price = re.findall(r"[-+]?(?:\d*\.*\d+)", price_text.get_text().replace(',','.'))[0]
+        price = float(re.findall(r"[-+]?(?:\d*\.*\d+)", price_text.get_text().replace(',','.'))[0])
         sign = soup.find("span", {"class":"a-price-symbol"}).get_text()
 
         price_list_str = chunk['price_list']
-        price_list = [float(i[:-1].replace(',','.')) for i in price_list_str]
+        price_list = [float(i.replace(',','.')) for i in price_list_str]
 
-        min_price = None if not price_list else min(price_list)
-        avg_price = None if not price_list else fmean(price_list)
-        max_price = None if not price_list else max(price_list)
+        min_price = None if not price_list else round(float(min(price_list)), 2)
+        avg_price = None if not price_list else round(float(fmean(price_list)), 2)
+        max_price = None if not price_list else round(float(max(price_list)), 2)
 
-        print(f"Range: {min_price}{sign} - {max_price}{sign}")
-        print(f"Avg: {avg_price}{sign}")
-        print(f"Latest: {price}{sign}")
+        print(f"Range: {min_price} - {max_price} {sign}")
+        print(f"Avg: {avg_price} {sign}")
+        print(f"Latest: {price} {sign}")
         print("--------------------------------")
 
         if not str(price) in price_list_str:
-            price_list_str.append(price)
+            price_list_str.append(str(price))
             chunk['price_list'] = price_list_str
 
     with open(sys.argv[1], "w") as file:

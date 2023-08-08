@@ -46,9 +46,9 @@ if __name__ == "__main__":
         price_list_str = chunk['price_list']
         price_list = [float(i.replace(',','.')) for i in price_list_str]
 
-        min_price = None if not price_list else round(float(min(price_list)), 2)
-        avg_price = None if not price_list else round(float(fmean(price_list)), 2)
-        max_price = None if not price_list else round(float(max(price_list)), 2)
+        min_price = None if not price_list else format(float(min(price_list)), '.2f')
+        avg_price = None if not price_list else format(float(fmean(price_list)), '.2f')
+        max_price = None if not price_list else format(float(max(price_list)), '.2f')
 
         print(f"Range: {min_price} - {max_price} {sign}")
         print(f"Avg: {avg_price} {sign}")

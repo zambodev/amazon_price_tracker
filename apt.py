@@ -28,16 +28,20 @@ if __name__ == "__main__":
         url = chunk['url']
 
         print(f"Object: {chunk['title']}")
-
-        page = requests.get(url, headers=header, timeout=60)
-        if(page.status_code != 200): 
+        try:
+            page = requests.get(url, headers=header, timeout=60)
+            if(page.status_code != 200): 
+                continue
+        except:
+            print("ERROR: Item page currently unavailable! Try again later.\n")
             continue
-        
+            
+
         soup = BeautifulSoup(page.content, "html.parser")
 
         price_text = soup.find("span", {"class":"a-offscreen"})
         if(not price_text):
-            print("ERROR: Item non loaded correctly")
+            print("ERROR: Item data non loaded correctly")
             continue
 
         price = float(re.findall(r"[-+]?(?:\d*\.*\d+)", price_text.get_text().replace(',','.'))[0])

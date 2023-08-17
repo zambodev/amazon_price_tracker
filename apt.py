@@ -45,8 +45,10 @@ if __name__ == "__main__":
             continue
 
         price = float(re.findall(r"[-+]?(?:\d*\.*\d+)", price_text.get_text().replace(',','.'))[0])
-        sign = soup.find("span", {"class":"a-price-symbol"}).get_text()
-
+        try:
+            sign = soup.find("span", {"class":"a-price-symbol"}).get_text()
+        except:
+            sign = '$/€';
         price_list_str = chunk['price_list']
         price_list = [float(i.replace(',','.')) for i in price_list_str]
 

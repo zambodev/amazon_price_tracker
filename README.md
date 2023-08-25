@@ -27,8 +27,8 @@ python3 apt.py <file>.json <title>:'<link>'
 ```
 > python3.11 apt.py file.json
 Object: gygabyte_3070_it
-Range: 423.0€ - 475.0€
-Avg: 449.0€
+Range: 423.00€ - 475.00€
+Avg: 449.00€
 Latest: 475.07€
 --------------------------------
 ```

@@ -32,4 +32,4 @@ Avg: 449.00€
 Latest: 475.07€
 --------------------------------
 ```
-Note: Price history data is collected only when the script is runned
+Note: Price history data is collected only when the script run

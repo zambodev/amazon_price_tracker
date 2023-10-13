@@ -8,6 +8,15 @@ from statistics import fmean
 from bs4 import BeautifulSoup
 
 
+def link(uri, label=None):
+    if label is None: 
+        label = uri
+    parameters = ''
+
+    escape_mask = '\033]8;{};{}\033\\{}\033]8;;\033\\'
+
+    return escape_mask.format(parameters, uri, label)
+
 if __name__ == "__main__":
 
     if len(sys.argv) == 1:
@@ -50,8 +59,9 @@ if __name__ == "__main__":
             min_price = None if not price_list else format(float(min(price_list)), '.2f')
             avg_price = None if not price_list else format(float(fmean(price_list)), '.2f')
             max_price = None if not price_list else format(float(max(price_list)), '.2f')
+            price = format(float(price), '.2f')
 
-            print(f"\n{title}\n")
+            print(link(url, title))
             print(f"Range: {min_price} - {max_price} {sign}")
             print(f"Avg: {avg_price} {sign}")
             print(f"Latest: {price} {sign}")

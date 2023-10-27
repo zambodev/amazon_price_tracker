@@ -75,7 +75,7 @@ if __name__ == "__main__":
                 except:
                     continue
 
-            time.sleep(10.0)
+            time.sleep(3600.0)
     else:           # Parent process
                     # Open json file
         with open(sys.argv[1], "r") as file:
